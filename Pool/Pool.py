@@ -19,7 +19,7 @@ def generateBalls():
         balls.append(Ball(origin[0]+90, origin[1] + 45 + (x * 31),color=(random.randint(0,255), random.randint(0,255), random.randint(0,255))))
     for x in range(0,1):
         balls.append(Ball(origin[0]+120, origin[1] + 60 + (x * 31),color=(random.randint(0,255), random.randint(0,255), random.randint(0,255))))
-    balls.append(Ball(displayWidth*0.8, displayHeight*0.5, color=(0,0,0), whiteBall=True))
+    balls.append(Ball(displayWidth*0.8, displayHeight*0.5, color=(255, 255, 255), whiteBall=True))
     for ball in balls:
         ball.active = True
         ball.initiate = False
@@ -40,7 +40,7 @@ class Hole():
     def __init__(self, x=0, y=0, width=30):
         self.x = x
         self.y = y
-        self.colour = (100, 255, 100)
+        self.colour = (0,0,0)
         self.width = width
     def draw(self):
         pygame.draw.circle(DISPLAY, self.colour, (int(self.x),int(self.y)), self.width)
@@ -168,8 +168,8 @@ def main():
     global gravity
     generateBalls()
     pygame.init()
-    WHITE=(255,255,255)
-    DISPLAY.fill(WHITE)
+    DARK_GREEN=(0, 48, 13)
+    DISPLAY.fill(DARK_GREEN)
     while True:
         timeBefore = time.time()
         for event in pygame.event.get():
@@ -185,7 +185,7 @@ def main():
                 #         ball.x = pygame.mouse.get_pos()[0]
                 if event.button == 1:
                     if mouseOverlappingBalls():
-                        if mouseOverlappingBalls()[0].colour == (0,0,0):
+                        if mouseOverlappingBalls()[0].whiteBall:
                             mouseOverlappingBalls()[0].active = False
                             mouseOverlappingBalls()[0].initiate = True
 
@@ -201,7 +201,7 @@ def main():
             if event.type==MOUSEBUTTONUP:
                 if mouseOverlappingBalls():
                     mouseOverlappingBalls()[0].followMouse = False
-        DISPLAY.fill((255,255,255))
+        DISPLAY.fill(DARK_GREEN)
         for hole in holes:
             hole.draw()
             hole.checkCollide()
